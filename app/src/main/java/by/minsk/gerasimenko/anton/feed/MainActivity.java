@@ -1,9 +1,12 @@
 package by.minsk.gerasimenko.anton.feed;
 
+
+
+import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.FragmentActivity;
-import android.os.Bundle;
+
 
 import by.minsk.gerasimenko.anton.feed.fragments.FragmentsManage;
 import by.minsk.gerasimenko.anton.feed.fragments.NewsFragm;
@@ -11,16 +14,14 @@ import by.minsk.gerasimenko.anton.feed.fragments.ShortList;
 import by.minsk.gerasimenko.anton.feed.fragments.Welcome;
 import by.minsk.gerasimenko.anton.feed.models.News;
 
-public  class MainActivity extends FragmentActivity  implements FragmentsManage {
+public  class MainActivity extends FragmentActivity implements FragmentsManage {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-
         showList();
-
     }
 
     @Override
@@ -48,5 +49,4 @@ public  class MainActivity extends FragmentActivity  implements FragmentsManage 
         ft.replace(R.id.container, fragment, NewsFragm.TAG);
         ft.addToBackStack(NewsFragm.TAG).commit();
     }
-
 }
