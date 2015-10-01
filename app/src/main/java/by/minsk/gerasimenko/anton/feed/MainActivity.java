@@ -43,10 +43,10 @@ public  class MainActivity extends FragmentActivity  implements FragmentsManage 
     @Override
     public void showNews(News news) {
 
-        Fragment fragment = NewsFragm.newInstance(this);
+        Fragment fragment = NewsFragm.newInstance(this, news);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.container,fragment,ShortList.TAG);
-        ft.addToBackStack(ShortList.TAG).commit();
+        ft.replace(R.id.container, fragment, NewsFragm.TAG);
+        ft.addToBackStack(NewsFragm.TAG).commit();
     }
 
 }

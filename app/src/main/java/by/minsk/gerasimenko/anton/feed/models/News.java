@@ -4,12 +4,14 @@ import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.io.Serializable;
+
 /**
  * Created by gerasimenko on 30.09.2015.
  */
 
 @DatabaseTable(tableName="News")
-public class News {
+public class News implements Serializable {
     @DatabaseField(generatedId = true) private int id;
     @DatabaseField(dataType = DataType.LONG) private long date;
 
@@ -17,7 +19,14 @@ public class News {
     @DatabaseField(dataType = DataType.STRING) private String picturePath;
     @DatabaseField(dataType = DataType.STRING) private String text;
 
-    private final static  News empty = new News();
+    private final static  News empty;
+
+    static {
+
+        empty = new News();
+        empty.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
+        empty.setTitle("Loren");
+    }
 
 
     public long getDate() {
