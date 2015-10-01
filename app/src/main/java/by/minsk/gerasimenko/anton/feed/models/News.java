@@ -17,6 +17,8 @@ public class News {
     @DatabaseField(dataType = DataType.STRING) private String picturePath;
     @DatabaseField(dataType = DataType.STRING) private String text;
 
+    private final static  News empty = new News();
+
 
     public long getDate() {
         return date;
@@ -48,5 +50,15 @@ public class News {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public static News empty(){
+
+        return empty;
+    }
+
+    public  boolean isEmpty() {
+
+        return (this.equals(empty));
     }
 }
