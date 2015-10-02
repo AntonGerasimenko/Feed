@@ -15,5 +15,8 @@
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="27dp"></LinearLayout>
+        android:layout_marginTop="27dp">
+
+
+    </LinearLayout>
 </RelativeLayout>

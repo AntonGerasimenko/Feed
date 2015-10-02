@@ -1,12 +1,14 @@
 package by.minsk.gerasimenko.anton.feed;
 
-import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.view.View;
+import android.widget.Button;
 
 
+import by.minsk.gerasimenko.anton.feed.Network.Connect;
 import by.minsk.gerasimenko.anton.feed.fragments.FragmentsManage;
 import by.minsk.gerasimenko.anton.feed.fragments.NewsFragm;
 import by.minsk.gerasimenko.anton.feed.fragments.ShortList;
@@ -18,10 +20,9 @@ public  class MainActivity extends FragmentActivity implements FragmentsManage {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
 
-        showList();
+        showWelcome();
     }
 
     @Override
@@ -33,7 +34,7 @@ public  class MainActivity extends FragmentActivity implements FragmentsManage {
     }
 
     @Override
-    public void showList() {
+    public void showList(){
 
         Fragment list = ShortList.newInstance(this);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();

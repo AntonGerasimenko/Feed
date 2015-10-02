@@ -1,6 +1,7 @@
 package by.minsk.gerasimenko.anton.feed;
 
 import android.app.Application;
+import android.os.Build;
 
 import by.minsk.gerasimenko.anton.feed.DB.DBManager;
 
@@ -12,6 +13,10 @@ public class MyApp extends Application {
     public void onCreate() {
         super.onCreate();
         DBManager.getInstance().init(getApplicationContext());
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.FROYO) {
+            System.setProperty("http.keepAlive", "false");
+        }
     }
 
     @Override
