@@ -1,4 +1,4 @@
-package by.minsk.gerasimenko.anton.feed.adapters;
+package by.minsk.gerasimenko.anton.feed.Logic.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
-import java.util.zip.Inflater;
 
 import by.minsk.gerasimenko.anton.feed.Logic.Convert;
 import by.minsk.gerasimenko.anton.feed.R;

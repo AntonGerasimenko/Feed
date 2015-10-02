@@ -1,7 +1,6 @@
 package by.minsk.gerasimenko.anton.feed;
 
-
-
+import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.Fragment;
@@ -21,6 +20,7 @@ public  class MainActivity extends FragmentActivity implements FragmentsManage {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+
         showList();
     }
 

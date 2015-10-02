@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import by.minsk.gerasimenko.anton.feed.R;
-import by.minsk.gerasimenko.anton.feed.adapters.ShortListAdapt;
+import by.minsk.gerasimenko.anton.feed.Logic.adapters.ShortListAdapt;
 import by.minsk.gerasimenko.anton.feed.models.News;
 
 /**
