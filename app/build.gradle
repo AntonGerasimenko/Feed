@@ -36,13 +36,5 @@ dependencies {
     compile files('libs/ormlite-core-4.49-SNAPSHOT.jar')
 
 
-    compile 'com.fasterxml.jackson.core:jackson-core:2.1.2'
-    compile 'com.fasterxml.jackson.core:jackson-annotations:2.1.2'
-    compile 'com.fasterxml.jackson.core:jackson-databind:2.1.2'
-    // Repackaged XML-specific libraries
-    compile files('libs/aalto-xml-android-0.9.8.jar')
-    compile files('libs/jackson-dataformat-xml-android-2.1.2.jar')
-    compile files('libs/jackson-dataformat-xml-android-2.1.2.jar')
-    compile files('libs/stax2-api-android-3.1.1.jar')
-    compile files('libs/stax-api-android-1.0.2.jar')
+
 }
