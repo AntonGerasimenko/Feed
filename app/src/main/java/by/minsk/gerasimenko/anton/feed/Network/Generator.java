@@ -1,8 +1,8 @@
 package by.minsk.gerasimenko.anton.feed.Network;
-
+/*
 import com.fasterxml.jackson.core.JsonEncoding;
 import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonGenerator;*/
 
 import java.io.File;
 import java.io.IOException;
@@ -24,7 +24,7 @@ public class Generator {
             }
         };
 
-
+/*
         JsonFactory jfactory = new JsonFactory();
 
         try {
@@ -50,5 +50,8 @@ public class Generator {
 
 
         return stream;
-    }
+    }*/
+        return null;
+
+}
 }

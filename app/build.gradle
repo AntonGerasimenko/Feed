@@ -18,11 +18,13 @@ android {
         }
     }
     packagingOptions {
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/NOTICE'
+           pickFirst 'META-INF/services/com.fasterxml.aalto.stax.InputFactoryImpl.java'
         exclude 'META-INF/services/com.fasterxml.jackson.core.ObjectCodec'
         exclude 'META-INF/services/com.fasterxml.jackson.core.JsonFactory'
     }
+
+
+
 }
 
 dependencies {
@@ -30,10 +32,17 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:support-v4:23.0.1'
     compile 'com.actionbarsherlock:actionbarsherlock:4.4.0@aar'
-
     compile files('libs/ormlite-android-4.49-SNAPSHOT.jar')
     compile files('libs/ormlite-core-4.49-SNAPSHOT.jar')
 
-    compile group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-xml', version: '2.5.3'
-    compile group: 'javax.xml.stream', name: 'stax-api',version:'1.0-2'
+
+    compile 'com.fasterxml.jackson.core:jackson-core:2.1.2'
+    compile 'com.fasterxml.jackson.core:jackson-annotations:2.1.2'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.1.2'
+    // Repackaged XML-specific libraries
+    compile files('libs/aalto-xml-android-0.9.8.jar')
+    compile files('libs/jackson-dataformat-xml-android-2.1.2.jar')
+    compile files('libs/jackson-dataformat-xml-android-2.1.2.jar')
+    compile files('libs/stax2-api-android-3.1.1.jar')
+    compile files('libs/stax-api-android-1.0.2.jar')
 }

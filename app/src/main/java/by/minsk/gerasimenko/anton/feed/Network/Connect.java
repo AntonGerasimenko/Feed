@@ -33,6 +33,7 @@ public class Connect {
                 }*/ finally{
                     if (urlConnection!= null)  urlConnection.disconnect();
                 }
+
             }
         }).start();
    }
