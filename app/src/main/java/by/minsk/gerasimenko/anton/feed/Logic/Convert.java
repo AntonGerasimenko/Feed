@@ -12,16 +12,13 @@ public class Convert {
 
     public static String date(long date) {
 
-        long now = Calendar.getInstance().getTimeInMillis();
-        long diff = date - now;
-
-        //String years = String.valueOf(diff/1000/60/60/24/365);
-
         calendar.setTime(new Date(date));
 
-        int year = calendar.get(Calendar.MONTH)+1;
+        int day = calendar.get(Calendar.DATE);
+        int month = calendar.get(Calendar.MONTH)+1;
+        int year = calendar.get(Calendar.YEAR);
 
-        return "("+ year+"."+ calendar.get(Calendar.YEAR) + ")";
+        return day +"."+month+"."+ year  ;
     }
 
 }

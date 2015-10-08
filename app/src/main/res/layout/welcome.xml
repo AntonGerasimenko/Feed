@@ -8,6 +8,13 @@
         android:layout_gravity="center_horizontal"
         android:text="LOAD"
         android:id="@+id/button" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="LIST"
+        android:id="@+id/btnList" />
+
 
     <TextView
         android:layout_width="wrap_content"

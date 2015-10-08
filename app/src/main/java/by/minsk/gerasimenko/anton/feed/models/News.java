@@ -12,12 +12,42 @@ import java.io.Serializable;
 
 @DatabaseTable(tableName="News")
 public class News implements Serializable {
-    @DatabaseField(generatedId = true) private int id;
+    @DatabaseField(dataType = DataType.INTEGER) private int _id;
     @DatabaseField(dataType = DataType.LONG) private long date;
 
     @DatabaseField(dataType = DataType.STRING) private String title;
     @DatabaseField(dataType = DataType.STRING) private String picturePath;
     @DatabaseField(dataType = DataType.STRING) private String text;
+    @DatabaseField(dataType = DataType.STRING) private String urlImage;
+    @DatabaseField(dataType = DataType.STRING) private String urlNews;
+
+    public int get_id() {
+        return _id;
+    }
+
+    public void set_id(int _id) {
+        this._id = _id;
+    }
+
+    public String getUrlImage() {
+        return urlImage;
+    }
+
+    public void setUrlImage(String urlImage) {
+        this.urlImage = urlImage;
+    }
+
+    public String getUrlNews() {
+        return urlNews;
+    }
+
+    public void setUrlNews(String urlNews) {
+        this.urlNews = urlNews;
+    }
+
+    public static News getEmpty() {
+        return empty;
+    }
 
     private final static  News empty;
 
@@ -28,6 +58,18 @@ public class News implements Serializable {
         empty.setTitle("Loren");
     }
 
+
+    public static News getNews(NewsPOJO newsPOJO){
+
+        News instance = new News();
+        instance.setId(newsPOJO.getId());
+        instance.setDate(newsPOJO.getPubDate());
+        instance.setTitle(newsPOJO.getTitle());
+        instance.setUrlImage(newsPOJO.getFrontImageUrl());
+        instance.setUrlNews(newsPOJO.getShortUrl());
+
+        return  instance;
+    }
 
     public long getDate() {
         return date;
@@ -69,5 +111,13 @@ public class News implements Serializable {
     public  boolean isEmpty() {
 
         return (this.equals(empty));
+    }
+
+    public int getId() {
+        return _id;
+    }
+
+    public void setId(int id) {
+        this._id = id;
     }
 }

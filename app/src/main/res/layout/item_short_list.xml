@@ -10,13 +10,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-
-        android:id="@+id/date"
-        android:layout_weight="20" />
+        android:layout_gravity="center"
+        android:id="@+id/date"  />
 
     <ImageView
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:background="@android:drawable/stat_sys_phone_call"
         android:id="@+id/imageView" />
 

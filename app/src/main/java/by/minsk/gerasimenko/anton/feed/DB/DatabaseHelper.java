@@ -20,7 +20,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private Dao<News, String> newsDao = null;
 
-    private static final String DATABASE_NAME = "CreditCalc.db";
+    private static final String DATABASE_NAME = "FeedNews.db";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

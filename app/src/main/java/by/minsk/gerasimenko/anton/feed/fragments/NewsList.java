@@ -6,28 +6,28 @@ import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import by.minsk.gerasimenko.anton.feed.DB.DBService;
 import by.minsk.gerasimenko.anton.feed.R;
-import by.minsk.gerasimenko.anton.feed.Logic.adapters.ShortListAdapt;
+import by.minsk.gerasimenko.anton.feed.Logic.adapters.NewsListAdapt;
 import by.minsk.gerasimenko.anton.feed.models.News;
 
 /**
  * Created by gerasimenko on 01.10.2015.
  */
-public class ShortList extends ListFragment {
+public class NewsList extends ListFragment {
 
     public static final String TAG = "ShortList";
     private FragmentsManage manager;
 
     private List<News> list;
 
-    public static ShortList newInstance(FragmentsManage manager){
+    public static NewsList newInstance(FragmentsManage manager){
 
         assert (manager!=null);
 
-        ShortList instance = new ShortList();
+        NewsList instance = new NewsList();
         instance.manager = manager;
 
         return instance;
@@ -36,10 +36,11 @@ public class ShortList extends ListFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
 
-        list = new ArrayList<>();
-        list.add(News.empty());
+        manager = (FragmentsManage) getActivity();
 
-        ListAdapter adapter = new ShortListAdapt(getActivity(), R.layout.item_short_list,list);
+        list = DBService.getAll();
+
+        ListAdapter adapter = new NewsListAdapt(getActivity(), R.layout.item_short_list,list);
 
         setListAdapter(adapter);
         super.onActivityCreated(savedInstanceState);

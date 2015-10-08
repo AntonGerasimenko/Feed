@@ -4,14 +4,11 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.view.View;
-import android.widget.Button;
 
 
-import by.minsk.gerasimenko.anton.feed.Network.Connect;
 import by.minsk.gerasimenko.anton.feed.fragments.FragmentsManage;
 import by.minsk.gerasimenko.anton.feed.fragments.NewsFragm;
-import by.minsk.gerasimenko.anton.feed.fragments.ShortList;
+import by.minsk.gerasimenko.anton.feed.fragments.NewsList;
 import by.minsk.gerasimenko.anton.feed.fragments.Welcome;
 import by.minsk.gerasimenko.anton.feed.models.News;
 
@@ -23,6 +20,7 @@ public  class MainActivity extends FragmentActivity implements FragmentsManage {
         setContentView(R.layout.activity_main);
 
         showWelcome();
+
     }
 
     @Override
@@ -36,10 +34,10 @@ public  class MainActivity extends FragmentActivity implements FragmentsManage {
     @Override
     public void showList(){
 
-        Fragment list = ShortList.newInstance(this);
+        Fragment list = NewsList.newInstance(this);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.add(R.id.container,list,ShortList.TAG);
-        ft.addToBackStack(ShortList.TAG).commit();
+        ft.replace(R.id.container, list, NewsList.TAG);
+        ft.addToBackStack(NewsList.TAG).commit();
     }
 
     @Override

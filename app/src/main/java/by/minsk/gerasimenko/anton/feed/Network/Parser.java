@@ -7,6 +7,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import by.minsk.gerasimenko.anton.feed.models.NewsPOJO;
 
@@ -16,7 +19,7 @@ import by.minsk.gerasimenko.anton.feed.models.NewsPOJO;
  */
 public class Parser {
 
-    void parse(InputStream stream){
+    public List<NewsPOJO> parse(InputStream stream){
         try {
             JsonFactory factory = new JsonFactory();
             JsonParser parser  = factory.createParser(stream);
@@ -25,13 +28,10 @@ public class Parser {
             JsonNode treeNode = objectMapper.readTree(parser);
             String message = String.valueOf(treeNode.get("result").get("items"));
 
-            NewsPOJO[] newses = objectMapper.readValue(message,NewsPOJO[].class);
-
-
-
-
+            return Arrays.asList(objectMapper.readValue(message, NewsPOJO[].class));
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return Collections.emptyList();
     }
 }

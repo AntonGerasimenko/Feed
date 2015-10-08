@@ -40,12 +40,21 @@ public class Welcome extends Fragment implements View.OnClickListener {
 
         Button btn = (Button) view.findViewById(R.id.button);
         btn.setOnClickListener(this);
+
+        Button btnList = (Button) view.findViewById(R.id.btnList);
+        btnList.setOnClickListener(this);
         return view;
     }
 
     @Override
     public void onClick(View v) {
-        Connect connect = new Connect();
-        connect.get();
+        switch (v.getId()){
+            case R.id.button:
+                Connect connect = new Connect();
+                connect.get();
+                break;
+            case R.id.btnList:
+                manager.showList();
+        }
     }
 }
