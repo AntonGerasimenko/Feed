@@ -18,9 +18,12 @@ android {
         }
     }
     packagingOptions {
-           pickFirst 'META-INF/services/com.fasterxml.aalto.stax.InputFactoryImpl.java'
-        exclude 'META-INF/services/com.fasterxml.jackson.core.ObjectCodec'
-        exclude 'META-INF/services/com.fasterxml.jackson.core.JsonFactory'
+
+        //exclude 'META-INF/services/com.fasterxml.jackson.core.ObjectCodec'
+        //exclude 'META-INF/services/com.fasterxml.jackson.core.JsonFactory'
+
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
     }
 
 
@@ -34,7 +37,8 @@ dependencies {
     compile 'com.actionbarsherlock:actionbarsherlock:4.4.0@aar'
     compile files('libs/ormlite-android-4.49-SNAPSHOT.jar')
     compile files('libs/ormlite-core-4.49-SNAPSHOT.jar')
-
-
-
+    compile 'com.fasterxml.jackson.core:jackson-core:2.5.3'
+    compile 'com.fasterxml.jackson.core:jackson-annotations:2.5.3'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.5.3'
+    compile files('libs/universal-image-loader-1.9.4.jar')
 }
