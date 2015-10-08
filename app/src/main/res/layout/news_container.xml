@@ -39,8 +39,5 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:id="@+id/textNews"
             android:layout_gravity="center_horizontal" />
-
-
     </LinearLayout>
-
 </LinearLayout>

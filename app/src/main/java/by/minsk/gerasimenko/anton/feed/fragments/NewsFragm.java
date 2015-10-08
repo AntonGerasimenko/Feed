@@ -3,9 +3,11 @@ package by.minsk.gerasimenko.anton.feed.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.TextView;
 
 import by.minsk.gerasimenko.anton.feed.Logic.Convert;
@@ -26,6 +28,7 @@ public class NewsFragm extends Fragment {
     private  TextView title;
     private  TextView textNews;
     private  TextView date;
+
 
 
     public static NewsFragm newInstance(FragmentsManage manager, News news){
@@ -52,6 +55,7 @@ public class NewsFragm extends Fragment {
         textNews = (TextView) view.findViewById(R.id.textNews);
         date = (TextView) view.findViewById(R.id.date);
 
+
         return view;
     }
 
@@ -65,9 +69,10 @@ public class NewsFragm extends Fragment {
         }
 
         title.setText(news.getTitle());
-        textNews.setText(news.getText());
         date.setText(Convert.date(news.getDate()));
 
+        String htmltext = news.getNewsText();
+        textNews.setText(Html.fromHtml(htmltext));
 
         super.onActivityCreated(savedInstanceState);
     }

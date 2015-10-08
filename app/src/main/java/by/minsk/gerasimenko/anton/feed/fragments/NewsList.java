@@ -9,8 +9,10 @@ import android.widget.ListView;
 import java.util.List;
 
 import by.minsk.gerasimenko.anton.feed.DB.DBService;
+import by.minsk.gerasimenko.anton.feed.Network.Connect;
 import by.minsk.gerasimenko.anton.feed.R;
 import by.minsk.gerasimenko.anton.feed.Logic.adapters.NewsListAdapt;
+import by.minsk.gerasimenko.anton.feed.models.FuncConnect;
 import by.minsk.gerasimenko.anton.feed.models.News;
 
 /**
@@ -48,7 +50,14 @@ public class NewsList extends ListFragment {
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
+        News news = list.get(position);
+        int idNews = news.get_id();
+        Connect connect = new Connect();
+        FuncConnect type = FuncConnect.CURR_NEWS;
+        type.setId(idNews);
+        connect.latestNews(type);
 
-        manager.showNews(list.get(position));
+       // manager.showNews(news);
+
     }
 }

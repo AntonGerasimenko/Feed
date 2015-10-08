@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Set;
 
 import by.minsk.gerasimenko.anton.feed.DB.DBService;
+import by.minsk.gerasimenko.anton.feed.models.FuncConnect;
 import by.minsk.gerasimenko.anton.feed.models.NewsPOJO;
 
 /**
@@ -23,25 +24,18 @@ public class Connect {
 
     private final String urlTUTby = "http://news.tut.by/exports/android_v2.php";
 
-
-    public void get() {
+    public void latestNews(final FuncConnect type ) {
 
         new Thread(new Runnable() {
             @Override
             public void run() {
-
-                List<NewsPOJO> newes = conn();
-                newes = extractDownloadNews(newes);
-
-                DBService.put(newes);
+                connect(type);
             }
         }).start();
    }
 
-    private List<NewsPOJO> conn() {
+    private void connect(FuncConnect type) {
         HttpURLConnection urlConnection = null;
-        List<NewsPOJO> response = null;
-
         try {
             URL url = new URL(urlTUTby);
             urlConnection = (HttpURLConnection) url.openConnection();
@@ -55,12 +49,11 @@ public class Connect {
 
             OutputStream out = new BufferedOutputStream(urlConnection.getOutputStream());
             Generator g = new Generator();
-            g.push(out);
+            g.generateRequest(out,type);
             out.close();
 
             InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-            Parser parser = new Parser();
-            response =  parser.parse(in);
+            handleResponse(type,in);
 
             in.close();
         } catch (IOException e) {
@@ -68,7 +61,6 @@ public class Connect {
         } finally{
             if (urlConnection!= null)  urlConnection.disconnect();
         }
-        return response;
     }
 
     private List<NewsPOJO> extractDownloadNews(List<NewsPOJO> input) {
@@ -85,4 +77,19 @@ public class Connect {
         return out;
     }
 
+    private void handleResponse(FuncConnect type,InputStream stream) {
+        Parser parser = new Parser();
+        switch (type) {
+            case ALL_NEWS:
+                List<NewsPOJO> response =  parser.parse(stream);
+                response = extractDownloadNews(response);
+                DBService.put(response);
+                break;
+            case CURR_NEWS:
+                String htmlText = parser.parseText(stream);
+                int id = type.getId();
+                DBService.addTextNews(id,htmlText);
+                break;
+        }
+    }
 }

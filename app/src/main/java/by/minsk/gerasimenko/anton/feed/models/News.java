@@ -20,14 +20,7 @@ public class News implements Serializable {
     @DatabaseField(dataType = DataType.STRING) private String text;
     @DatabaseField(dataType = DataType.STRING) private String urlImage;
     @DatabaseField(dataType = DataType.STRING) private String urlNews;
-
-    public int get_id() {
-        return _id;
-    }
-
-    public void set_id(int _id) {
-        this._id = _id;
-    }
+    @DatabaseField(dataType = DataType.STRING) private String newsText;
 
     public String getUrlImage() {
         return urlImage;
@@ -49,20 +42,12 @@ public class News implements Serializable {
         return empty;
     }
 
-    private final static  News empty;
-
-    static {
-
-        empty = new News();
-        empty.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
-        empty.setTitle("Loren");
-    }
-
+    private final static  News empty = new News();
 
     public static News getNews(NewsPOJO newsPOJO){
 
         News instance = new News();
-        instance.setId(newsPOJO.getId());
+        instance.set_id(newsPOJO.getId());
         instance.setDate(newsPOJO.getPubDate());
         instance.setTitle(newsPOJO.getTitle());
         instance.setUrlImage(newsPOJO.getFrontImageUrl());
@@ -113,11 +98,19 @@ public class News implements Serializable {
         return (this.equals(empty));
     }
 
-    public int getId() {
+    public String getNewsText() {
+        return newsText;
+    }
+
+    public void setNewsText(String newsText) {
+        this.newsText = newsText;
+    }
+
+    public int get_id() {
         return _id;
     }
 
-    public void setId(int id) {
-        this._id = id;
+    public void set_id(int _id) {
+        this._id = _id;
     }
 }

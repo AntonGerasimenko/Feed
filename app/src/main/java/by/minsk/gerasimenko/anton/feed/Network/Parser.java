@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import by.minsk.gerasimenko.anton.feed.models.FuncConnect;
 import by.minsk.gerasimenko.anton.feed.models.NewsPOJO;
 
 
@@ -19,6 +20,7 @@ import by.minsk.gerasimenko.anton.feed.models.NewsPOJO;
  */
 public class Parser {
 
+
     public List<NewsPOJO> parse(InputStream stream){
         try {
             JsonFactory factory = new JsonFactory();
@@ -26,6 +28,7 @@ public class Parser {
 
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode treeNode = objectMapper.readTree(parser);
+            
             String message = String.valueOf(treeNode.get("result").get("items"));
 
             return Arrays.asList(objectMapper.readValue(message, NewsPOJO[].class));
@@ -33,5 +36,21 @@ public class Parser {
             e.printStackTrace();
         }
         return Collections.emptyList();
+    }
+
+    public String parseText(InputStream stream) {
+        try {
+            JsonFactory factory = new JsonFactory();
+            JsonParser parser = factory.createParser(stream);
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode treeNode = objectMapper.readTree(parser);
+
+            return String.valueOf(treeNode.get("result").get("htmlText"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return "";
     }
 }

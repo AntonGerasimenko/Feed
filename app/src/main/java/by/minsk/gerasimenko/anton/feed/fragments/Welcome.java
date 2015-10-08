@@ -13,6 +13,7 @@ import android.widget.Button;
 
 import by.minsk.gerasimenko.anton.feed.Network.Connect;
 import by.minsk.gerasimenko.anton.feed.R;
+import by.minsk.gerasimenko.anton.feed.models.FuncConnect;
 
 
 /**
@@ -51,7 +52,7 @@ public class Welcome extends Fragment implements View.OnClickListener {
         switch (v.getId()){
             case R.id.button:
                 Connect connect = new Connect();
-                connect.get();
+                connect.latestNews(FuncConnect.ALL_NEWS);
                 break;
             case R.id.btnList:
                 manager.showList();

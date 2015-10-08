@@ -35,7 +35,7 @@ public class DBService {
         Set<Integer> out = new HashSet<>();
 
         for (News news:getAll()) {
-            out.add(news.getId());
+            out.add(news.get_id());
         }
 
         return out;
@@ -49,5 +49,11 @@ public class DBService {
             e.printStackTrace();
         }
         return Collections.emptyList();
+    }
+
+    public static void addTextNews(int id,String htmlText) {
+
+
+
     }
 }
