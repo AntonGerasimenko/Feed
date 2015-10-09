@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -49,13 +50,10 @@ public class NewsFragm extends Fragment implements ProgressListener {
     private ImageView image;
     private ProgressBar progressBar;
 
-    public static NewsFragm newInstance(FragmentsManage manager, News news){
-
-        assert (manager!=null);
+    public static NewsFragm newInstance(News news){
         assert (news != null);
 
         NewsFragm instance = new NewsFragm();
-        instance.manager = manager;
         instance.news = news;
 
         return instance;
@@ -73,8 +71,6 @@ public class NewsFragm extends Fragment implements ProgressListener {
         image = (ImageView) view.findViewById(R.id.imageView2);
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar2);
 
-
-
         imageLoader.init(ImageLoaderConfiguration.createDefault(getActivity()));
 
         return view;
@@ -88,6 +84,14 @@ public class NewsFragm extends Fragment implements ProgressListener {
         if (savedInstanceState!= null) {
             news = (News)savedInstanceState.getSerializable("news");
         }
+
+        manager.setTitleActionBar(TAG);
+        super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
+    public void onResume() {
+
         if (news != null) {
             if (news.isNeedLoad()) {
 
@@ -95,9 +99,7 @@ public class NewsFragm extends Fragment implements ProgressListener {
                 loadHtml();
             } else showNews(news);
         }
-
-        manager.setTitleActionBar(TAG);
-        super.onActivityCreated(savedInstanceState);
+        super.onResume();
     }
 
     @Override
@@ -126,7 +128,11 @@ public class NewsFragm extends Fragment implements ProgressListener {
             String htmlText = news.getHtmlNews();
             if (htmlText!= null && !htmlText.equals("")) {
                 showNews(news);
-            } else loadHtml();
+            } else {
+                progressBar.setVisibility(View.GONE);
+
+                Toast.makeText(getActivity(),R.string.err2,Toast.LENGTH_LONG).show();
+            }
         }
     }
 

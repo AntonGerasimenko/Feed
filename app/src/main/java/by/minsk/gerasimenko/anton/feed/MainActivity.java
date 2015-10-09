@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.Fragment;
+import android.view.View;
 
 
 import com.actionbarsherlock.app.ActionBar;
@@ -37,7 +38,7 @@ public  class MainActivity extends SherlockFragmentActivity implements Fragments
     @Override
     public void showWelcome(){
 
-        Fragment welcome = Welcome.newInstance(this);
+        Fragment welcome = new Welcome();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.container, welcome, Welcome.TAG).commit();
     }
@@ -45,7 +46,8 @@ public  class MainActivity extends SherlockFragmentActivity implements Fragments
     @Override
     public void showList(List<News> listNews){
 
-        Fragment list = NewsList.newInstance(this,listNews);
+        findViewById(R.id.progressBar3).setVisibility(View.GONE);
+        Fragment list = NewsList.newInstance(listNews);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.container, list, NewsList.TAG);
         ft.addToBackStack(NewsList.TAG).commit();
@@ -54,7 +56,7 @@ public  class MainActivity extends SherlockFragmentActivity implements Fragments
     @Override
     public void showNews(News news) {
 
-        Fragment fragment = NewsFragm.newInstance(this, news);
+        Fragment fragment = NewsFragm.newInstance(news);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.container, fragment, NewsFragm.TAG);
         ft.addToBackStack(NewsFragm.TAG).commit();

@@ -24,7 +24,6 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:gravity="center_horizontal"
-                    android:text="Large Text"
                     android:id="@+id/title"
                     android:layout_gravity="center_horizontal" />
             </LinearLayout>
@@ -34,7 +33,6 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:gravity="center_horizontal"
-                android:text="22/07"
                 android:id="@+id/date" />
 
             <ImageView

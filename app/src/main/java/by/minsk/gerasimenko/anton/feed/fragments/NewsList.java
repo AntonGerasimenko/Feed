@@ -27,13 +27,10 @@ public class NewsList extends ListFragment {
 
     private List<News> list;
 
-    public static NewsList newInstance(FragmentsManage manager,List<News> list ){
-
-        assert (manager!=null);
+    public static NewsList newInstance(List<News> list ){
         assert (list!=null);
 
         NewsList instance = new NewsList();
-        instance.manager = manager;
         instance.list = list;
 
         return instance;

@@ -2,6 +2,9 @@ package by.minsk.gerasimenko.anton.feed.Network;
 
 
 
+import android.os.Handler;
+import android.os.Message;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
@@ -26,29 +29,34 @@ public class Connect {
 
     private final String urlTUTby = "http://news.tut.by/exports/android_v2.php";
 
-    public void latestNews(final FuncConnect type, ProgressListener listener) {
+    private static Handler handler;
+
+    public void latestNews(final FuncConnect type, final ProgressListener listener) {
 
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 connect(type);
+                handler.sendEmptyMessage(0);
             }
         });
         thread.start();
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
-        if (type.equals(FuncConnect.CURR_NEWS)){
-            List <News> list = DBService.getNews(type.getId());
-            listener.fin(list);
-        } else if (type.equals(FuncConnect.ALL_NEWS)) {
+        handler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                if (type.equals(FuncConnect.CURR_NEWS)){
+                    List <News> list = DBService.getNews(type.getId());
+                    listener.fin(list);
+                } else if (type.equals(FuncConnect.ALL_NEWS)) {
 
-            List <News> list = DBService.getAll();
-            listener.fin(list);
-        }
+                    List <News> list = DBService.getAll();
+                    listener.fin(list);
+                }
+
+                super.handleMessage(msg);
+            }
+        };
    }
 
     private void connect(FuncConnect type) {

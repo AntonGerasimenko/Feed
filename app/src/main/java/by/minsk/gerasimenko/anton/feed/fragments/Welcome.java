@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -29,16 +30,6 @@ public class Welcome extends Fragment implements View.OnClickListener , Progress
     public static final String TAG = "Welcome";
     private FragmentsManage manager;
     private Button btnList;
-
-    public static Welcome newInstance(FragmentsManage manager){
-
-        assert (manager!=null);
-
-        Welcome instance = new Welcome();
-        instance.manager = manager;
-
-        return instance;
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -71,7 +62,7 @@ public class Welcome extends Fragment implements View.OnClickListener , Progress
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btnList:
-               // btnList.setVisibility(View.GONE);
+                btnList.setVisibility(View.GONE);
                 Connect connect = new Connect();
                 connect.latestNews(FuncConnect.ALL_NEWS,this);
                 break;
@@ -80,8 +71,14 @@ public class Welcome extends Fragment implements View.OnClickListener , Progress
 
     @Override
     public void fin(List<News> news) {
-        Log.d("Fragments_Load","Welcome: "+news.size());
-        manager.showList(news);
+        Log.d("Fragments_Load", "Welcome: " + news.size());
+        if (news.isEmpty()) {
+
+            btnList.setVisibility(View.VISIBLE);
+            Toast.makeText(getActivity(),R.string.err1,Toast.LENGTH_LONG).show();
+        } else {
+            manager.showList(news);
+        }
     }
 
     @Override
