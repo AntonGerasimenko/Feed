@@ -39,7 +39,6 @@ public class NewsList extends ListFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
 
         manager = (FragmentsManage) getActivity();
-
         list = DBService.getAll();
 
         ListAdapter adapter = new NewsListAdapt(getActivity(), R.layout.item_short_list,list);
@@ -51,13 +50,9 @@ public class NewsList extends ListFragment {
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         News news = list.get(position);
-        int idNews = news.get_id();
-        Connect connect = new Connect();
-        FuncConnect type = FuncConnect.CURR_NEWS;
-        type.setId(idNews);
-        connect.latestNews(type);
 
-       // manager.showNews(news);
+
+        manager.showNews(news);
 
     }
 }

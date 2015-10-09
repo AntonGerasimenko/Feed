@@ -28,7 +28,7 @@ public class Generator {
                 return getAllNews(out);
             case CURR_NEWS:
                 int id = type.getId();
-                return id > 0 && getcurrNews(out, id);
+                return id > 0 && getCurrNews(out, id);
         }
         return false;
     }
@@ -59,25 +59,22 @@ public class Generator {
         return true;
     }
 
-    private boolean getcurrNews(OutputStream out, int id){
+    private boolean getCurrNews(OutputStream out, int id){
         try {
             JsonFactory factory = new JsonFactory();
             JsonGenerator generator  = factory.createGenerator(  out    , JsonEncoding.UTF8);
 
             generator.writeStartObject();
-            generator.writeArrayFieldStart("params");
-                generator.writeStartObject();
+            generator.writeObjectFieldStart("params");
+
                     generator.writeNumberField("id", id);
-                    generator.writeBooleanField("removeTags", true);
-                    generator.writeBooleanField("removeImages",true);
-                generator.writeEndObject();
-            generator.writeEndArray();
-            generator.writeStringField("method", "/tutby/news/popular");
+                    generator.writeBooleanField("removeTags", false);
+                    generator.writeBooleanField("removeImages", true);
+
+            generator.writeEndObject();
+            generator.writeStringField("method", "/tutby/news/article");
             generator.writeNumberField("jsonrpc", 2.0);
-            generator.writeNumberField("id", 4);
-
-
-          //  {"params":{"id":"467758","removeTags":false,"removeImages":false},"jsonrpc":"2.0","method":"/tutby/news/article","id":8}
+            generator.writeNumberField("id", 5);
 
             generator.writeEndObject();
             generator.close();

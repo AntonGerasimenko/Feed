@@ -14,13 +14,22 @@ import java.io.Serializable;
 public class News implements Serializable {
     @DatabaseField(dataType = DataType.INTEGER) private int _id;
     @DatabaseField(dataType = DataType.LONG) private long date;
-
     @DatabaseField(dataType = DataType.STRING) private String title;
-    @DatabaseField(dataType = DataType.STRING) private String picturePath;
-    @DatabaseField(dataType = DataType.STRING) private String text;
     @DatabaseField(dataType = DataType.STRING) private String urlImage;
     @DatabaseField(dataType = DataType.STRING) private String urlNews;
-    @DatabaseField(dataType = DataType.STRING) private String newsText;
+    @DatabaseField(dataType = DataType.STRING) private String htmlNews;
+
+    public News(News news) {
+        this._id = news.get_id();
+        this.date = news.getDate();
+        this.title = news.getTitle();
+        this.urlImage = news.getUrlImage();
+        this.urlNews = news.getUrlNews();
+        this.htmlNews = news.getHtmlNews();
+    }
+
+    public News() {
+    }
 
     public String getUrlImage() {
         return urlImage;
@@ -72,38 +81,20 @@ public class News implements Serializable {
         this.title = title;
     }
 
-    public String getPicturePath() {
-        return picturePath;
-    }
-
-    public void setPicturePath(String picturePath) {
-        this.picturePath = picturePath;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
     public static News empty(){
-
         return empty;
     }
 
     public  boolean isEmpty() {
-
         return (this.equals(empty));
     }
 
-    public String getNewsText() {
-        return newsText;
+    public String getHtmlNews() {
+        return htmlNews;
     }
 
-    public void setNewsText(String newsText) {
-        this.newsText = newsText;
+    public void setHtmlNews(String htmlNews) {
+        this.htmlNews = htmlNews;
     }
 
     public int get_id() {

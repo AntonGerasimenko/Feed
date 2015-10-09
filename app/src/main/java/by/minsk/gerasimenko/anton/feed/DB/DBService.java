@@ -1,6 +1,8 @@
 package by.minsk.gerasimenko.anton.feed.DB;
 
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.DeleteBuilder;
+import com.j256.ormlite.stmt.QueryBuilder;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -37,7 +39,6 @@ public class DBService {
         for (News news:getAll()) {
             out.add(news.get_id());
         }
-
         return out;
     }
 
@@ -52,8 +53,27 @@ public class DBService {
     }
 
     public static void addTextNews(int id,String htmlText) {
+        try {
+            Dao<News,String> dao = DBManager.getInstance().getHelper().getNewsDao();
 
 
 
+            QueryBuilder<News,String> builder = dao.queryBuilder();
+            builder.where().eq("_id", id);
+            List<News> newses = dao.query(builder.prepare());
+
+            if (newses!= null) {
+                News correct = newses.get(0);
+                DeleteBuilder<News,String> deleteBuilder = dao.deleteBuilder();
+                deleteBuilder.where().eq("_id",correct.get_id());
+                deleteBuilder.delete();
+
+                correct.setHtmlNews(htmlText);
+
+                dao.create(correct);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

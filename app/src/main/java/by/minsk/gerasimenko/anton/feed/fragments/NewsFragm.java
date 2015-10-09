@@ -4,14 +4,16 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Html;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
 import android.widget.TextView;
 
 import by.minsk.gerasimenko.anton.feed.Logic.Convert;
+import by.minsk.gerasimenko.anton.feed.Network.Connect;
 import by.minsk.gerasimenko.anton.feed.R;
+import by.minsk.gerasimenko.anton.feed.models.FuncConnect;
 import by.minsk.gerasimenko.anton.feed.models.News;
 
 /**
@@ -71,16 +73,32 @@ public class NewsFragm extends Fragment {
         title.setText(news.getTitle());
         date.setText(Convert.date(news.getDate()));
 
-        String htmltext = news.getNewsText();
-        textNews.setText(Html.fromHtml(htmltext));
+        String htmltext = news.getHtmlNews();
 
+        if (htmltext != null && !htmltext.equals("")) {
+            textNews.setText(Html.fromHtml(htmltext));
+            textNews.setMovementMethod(new ScrollingMovementMethod());
+        } else {
+
+
+            loadHtml();
+        }
         super.onActivityCreated(savedInstanceState);
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
 
-        outState.putSerializable("news",news);
+        outState.putSerializable("news", news);
         super.onSaveInstanceState(outState);
+    }
+
+    private void loadHtml() {
+
+        int idNews = news.get_id();
+        Connect connect = new Connect();
+        FuncConnect type = FuncConnect.CURR_NEWS;
+        type.setId(idNews);
+        connect.latestNews(type);
     }
 }
