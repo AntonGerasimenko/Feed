@@ -8,7 +8,13 @@ import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import by.minsk.gerasimenko.anton.feed.Logic.Convert;
 import by.minsk.gerasimenko.anton.feed.Network.Connect;
@@ -25,11 +31,19 @@ public class NewsFragm extends Fragment {
 
     private FragmentsManage manager;
     private News news;
+    private ImageLoader imageLoader = ImageLoader.getInstance();
+
+    private DisplayImageOptions options = new DisplayImageOptions.Builder()
+            .cacheInMemory(true)
+            .cacheOnDisk(true)
+            .build();
 
 
     private  TextView title;
     private  TextView textNews;
     private  TextView date;
+    private ImageView image;
+    private ProgressBar progressBar;
 
 
 
@@ -56,7 +70,10 @@ public class NewsFragm extends Fragment {
         title = (TextView) view.findViewById(R.id.title);
         textNews = (TextView) view.findViewById(R.id.textNews);
         date = (TextView) view.findViewById(R.id.date);
+        image = (ImageView) view.findViewById(R.id.imageView2);
+        progressBar = (ProgressBar) view.findViewById(R.id.progressBar2);
 
+        imageLoader.init(ImageLoaderConfiguration.createDefault(getActivity()));
 
         return view;
     }
@@ -78,11 +95,14 @@ public class NewsFragm extends Fragment {
         if (htmltext != null && !htmltext.equals("")) {
             textNews.setText(Html.fromHtml(htmltext));
             textNews.setMovementMethod(new ScrollingMovementMethod());
+
+            imageLoader.displayImage(news.getUrlImage(), image, options);
+            progressBar.setVisibility(View.GONE);
         } else {
-
-
+            progressBar.setVisibility(View.VISIBLE);
             loadHtml();
         }
+
         super.onActivityCreated(savedInstanceState);
     }
 

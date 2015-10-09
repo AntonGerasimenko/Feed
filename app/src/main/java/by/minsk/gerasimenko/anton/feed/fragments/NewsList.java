@@ -2,6 +2,7 @@ package by.minsk.gerasimenko.anton.feed.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;
