@@ -5,19 +5,23 @@
     android:weightSum="100"
     android:layout_height="match_parent">
 
-
-    <TextView
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:layout_gravity="center"
-        android:id="@+id/date"  />
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@android:drawable/stat_sys_phone_call"
+            android:id="@+id/imageView" />
 
-    <ImageView
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:background="@android:drawable/stat_sys_phone_call"
-        android:id="@+id/imageView" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_gravity="center"
+            android:id="@+id/date"  />
+    </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"

@@ -13,6 +13,8 @@ import android.support.v4.app.Fragment;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
+import java.util.List;
+
 import by.minsk.gerasimenko.anton.feed.fragments.FragmentsManage;
 import by.minsk.gerasimenko.anton.feed.fragments.NewsFragm;
 import by.minsk.gerasimenko.anton.feed.fragments.NewsList;
@@ -29,15 +31,11 @@ public  class MainActivity extends SherlockFragmentActivity implements Fragments
         setContentView(R.layout.activity_main);
 
         bar = getSupportActionBar();
-
-
-       showWelcome();
+        if (savedInstanceState==null)      showWelcome();
     }
 
     @Override
     public void showWelcome(){
-
-        bar.setTitle(R.string.welcome);
 
         Fragment welcome = Welcome.newInstance(this);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -45,11 +43,9 @@ public  class MainActivity extends SherlockFragmentActivity implements Fragments
     }
 
     @Override
-    public void showList(){
+    public void showList(List<News> listNews){
 
-        bar.setTitle(R.string.list_news);
-
-        Fragment list = NewsList.newInstance(this);
+        Fragment list = NewsList.newInstance(this,listNews);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.container, list, NewsList.TAG);
         ft.addToBackStack(NewsList.TAG).commit();
@@ -57,10 +53,27 @@ public  class MainActivity extends SherlockFragmentActivity implements Fragments
 
     @Override
     public void showNews(News news) {
-        bar.setTitle(R.string.current_news);
+
         Fragment fragment = NewsFragm.newInstance(this, news);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.container, fragment, NewsFragm.TAG);
         ft.addToBackStack(NewsFragm.TAG).commit();
+    }
+
+    @Override
+    public void setTitleActionBar(String tag) {
+        assert (tag!=null);
+
+        switch (tag) {
+            case Welcome.TAG:
+                bar.setTitle(R.string.welcome);
+                break;
+            case NewsList.TAG:
+                bar.setTitle(R.string.list_news);
+                break;
+            case NewsFragm.TAG:
+                bar.setTitle(R.string.current_news);
+                break;
+        }
     }
 }

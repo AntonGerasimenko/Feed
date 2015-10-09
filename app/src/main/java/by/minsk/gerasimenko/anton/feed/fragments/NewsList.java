@@ -3,6 +3,7 @@ package by.minsk.gerasimenko.anton.feed.fragments;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -26,12 +27,14 @@ public class NewsList extends ListFragment {
 
     private List<News> list;
 
-    public static NewsList newInstance(FragmentsManage manager){
+    public static NewsList newInstance(FragmentsManage manager,List<News> list ){
 
         assert (manager!=null);
+        assert (list!=null);
 
         NewsList instance = new NewsList();
         instance.manager = manager;
+        instance.list = list;
 
         return instance;
     }
@@ -39,21 +42,24 @@ public class NewsList extends ListFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
 
+        Log.d("Fragments_Load","NewsList");
+
+        if (savedInstanceState!=null) {
+
+            list = DBService.getAll();
+        }
         manager = (FragmentsManage) getActivity();
-        list = DBService.getAll();
-
         ListAdapter adapter = new NewsListAdapt(getActivity(), R.layout.item_short_list,list);
-
         setListAdapter(adapter);
+        manager.setTitleActionBar(TAG);
+
         super.onActivityCreated(savedInstanceState);
     }
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
+
         News news = list.get(position);
-
-
         manager.showNews(news);
-
     }
 }

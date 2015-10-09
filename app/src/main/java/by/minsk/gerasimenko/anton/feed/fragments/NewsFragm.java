@@ -5,10 +5,12 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -16,7 +18,10 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
+import java.util.List;
+
 import by.minsk.gerasimenko.anton.feed.Logic.Convert;
+import by.minsk.gerasimenko.anton.feed.Logic.ProgressListener;
 import by.minsk.gerasimenko.anton.feed.Network.Connect;
 import by.minsk.gerasimenko.anton.feed.R;
 import by.minsk.gerasimenko.anton.feed.models.FuncConnect;
@@ -25,7 +30,7 @@ import by.minsk.gerasimenko.anton.feed.models.News;
 /**
  * Created by gerasimenko on 01.10.2015.
  */
-public class NewsFragm extends Fragment {
+public class NewsFragm extends Fragment implements ProgressListener {
 
     public static final String TAG = "NewFragm";
 
@@ -38,14 +43,11 @@ public class NewsFragm extends Fragment {
             .cacheOnDisk(true)
             .build();
 
-
     private  TextView title;
     private  TextView textNews;
     private  TextView date;
     private ImageView image;
     private ProgressBar progressBar;
-
-
 
     public static NewsFragm newInstance(FragmentsManage manager, News news){
 
@@ -59,8 +61,6 @@ public class NewsFragm extends Fragment {
         return instance;
     }
 
-
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -73,36 +73,30 @@ public class NewsFragm extends Fragment {
         image = (ImageView) view.findViewById(R.id.imageView2);
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar2);
 
+
+
         imageLoader.init(ImageLoaderConfiguration.createDefault(getActivity()));
 
         return view;
     }
 
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
 
+        Log.d("Fragments_Load", "NewsFragm");
+        manager = (FragmentsManage) getActivity();
         if (savedInstanceState!= null) {
-
             news = (News)savedInstanceState.getSerializable("news");
         }
+        if (news != null) {
+            if (news.isNeedLoad()) {
 
-        title.setText(news.getTitle());
-        date.setText(Convert.date(news.getDate()));
-
-        String htmltext = news.getHtmlNews();
-
-        if (htmltext != null && !htmltext.equals("")) {
-            textNews.setText(Html.fromHtml(htmltext));
-            textNews.setMovementMethod(new ScrollingMovementMethod());
-
-            imageLoader.displayImage(news.getUrlImage(), image, options);
-            progressBar.setVisibility(View.GONE);
-        } else {
-            progressBar.setVisibility(View.VISIBLE);
-            loadHtml();
+                progressBar.setVisibility(View.VISIBLE);
+                loadHtml();
+            } else showNews(news);
         }
 
+        manager.setTitleActionBar(TAG);
         super.onActivityCreated(savedInstanceState);
     }
 
@@ -119,6 +113,35 @@ public class NewsFragm extends Fragment {
         Connect connect = new Connect();
         FuncConnect type = FuncConnect.CURR_NEWS;
         type.setId(idNews);
-        connect.latestNews(type);
+        connect.latestNews(type, this);
     }
+
+    @Override
+    public void fin(List<News> newsList) {
+
+        if (newsList != null && !newsList.isEmpty()) {
+
+            this.news =  newsList.get(0);
+
+            String htmlText = news.getHtmlNews();
+            if (htmlText!= null && !htmlText.equals("")) {
+                showNews(news);
+            } else loadHtml();
+        }
+    }
+
+    private void showNews(News news) {
+
+        String htmltext = news.getHtmlNews();
+
+        textNews.setText(Html.fromHtml(htmltext));
+        textNews.setMovementMethod(new ScrollingMovementMethod());
+
+        imageLoader.displayImage(news.getUrlImage(), image, options);
+        progressBar.setVisibility(View.GONE);
+
+        title.setText(news.getTitle());
+        date.setText(Convert.date(news.getDate()));
+    }
+
 }

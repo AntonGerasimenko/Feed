@@ -19,13 +19,10 @@ public class News implements Serializable {
     @DatabaseField(dataType = DataType.STRING) private String urlNews;
     @DatabaseField(dataType = DataType.STRING) private String htmlNews;
 
-    public News(News news) {
-        this._id = news.get_id();
-        this.date = news.getDate();
-        this.title = news.getTitle();
-        this.urlImage = news.getUrlImage();
-        this.urlNews = news.getUrlNews();
-        this.htmlNews = news.getHtmlNews();
+
+    public boolean isNeedLoad() {
+
+        return htmlNews == null || htmlNews.equals("");
     }
 
     public News() {

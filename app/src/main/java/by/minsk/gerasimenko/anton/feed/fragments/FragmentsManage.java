@@ -1,5 +1,7 @@
 package by.minsk.gerasimenko.anton.feed.fragments;
 
+import java.util.List;
+
 import by.minsk.gerasimenko.anton.feed.models.News;
 
 /**
@@ -7,7 +9,9 @@ import by.minsk.gerasimenko.anton.feed.models.News;
  */
 public interface FragmentsManage {
 
-    public void showWelcome();
-    public void showList();
-    public void showNews(News news);
+    void showWelcome();
+    void showList(List<News> list);
+    void showNews(News news);
+    void setTitleActionBar(String tag);
+
 }

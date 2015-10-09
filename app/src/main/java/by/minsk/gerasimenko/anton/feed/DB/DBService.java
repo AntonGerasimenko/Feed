@@ -76,4 +76,19 @@ public class DBService {
             e.printStackTrace();
         }
     }
+
+    public static List<News> getNews(int id) {
+        List<News> newses = null;
+        try {
+            Dao<News, String> dao = DBManager.getInstance().getHelper().getNewsDao();
+
+
+            QueryBuilder<News, String> builder = dao.queryBuilder();
+            builder.where().eq("_id", id);
+            newses = dao.query(builder.prepare());
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return newses!=null ? newses: Collections.<News>emptyList();
+    }
 }

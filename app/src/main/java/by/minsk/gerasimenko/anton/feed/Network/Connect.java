@@ -14,7 +14,9 @@ import java.util.List;
 import java.util.Set;
 
 import by.minsk.gerasimenko.anton.feed.DB.DBService;
+import by.minsk.gerasimenko.anton.feed.Logic.ProgressListener;
 import by.minsk.gerasimenko.anton.feed.models.FuncConnect;
+import by.minsk.gerasimenko.anton.feed.models.News;
 import by.minsk.gerasimenko.anton.feed.models.NewsPOJO;
 
 /**
@@ -24,14 +26,29 @@ public class Connect {
 
     private final String urlTUTby = "http://news.tut.by/exports/android_v2.php";
 
-    public void latestNews(final FuncConnect type ) {
+    public void latestNews(final FuncConnect type, ProgressListener listener) {
 
-        new Thread(new Runnable() {
+        Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 connect(type);
             }
-        }).start();
+        });
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        if (type.equals(FuncConnect.CURR_NEWS)){
+            List <News> list = DBService.getNews(type.getId());
+            listener.fin(list);
+        } else if (type.equals(FuncConnect.ALL_NEWS)) {
+
+            List <News> list = DBService.getAll();
+            listener.fin(list);
+        }
    }
 
     private void connect(FuncConnect type) {
@@ -88,7 +105,7 @@ public class Connect {
             case CURR_NEWS:
                 String htmlText = parser.parseText(stream);
                 int id = type.getId();
-                DBService.addTextNews(id,htmlText);
+                DBService.addTextNews(id, htmlText);
                 break;
         }
     }
