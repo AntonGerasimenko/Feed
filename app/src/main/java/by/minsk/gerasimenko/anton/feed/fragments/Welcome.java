@@ -48,10 +48,10 @@ public class Welcome extends Fragment implements View.OnClickListener , Progress
         manager = (FragmentsManage) getActivity();
         if (savedInstanceState!= null) {
 
-            if (savedInstanceState.getBoolean("visible")) {
+           /* if (savedInstanceState.getBoolean("visible")) {
 
                 btnList.setVisibility(View.VISIBLE);
-            } else btnList.setVisibility(View.GONE);
+            } else btnList.setVisibility(View.GONE);*/
         }
 
         manager.setTitleActionBar(TAG);
@@ -84,9 +84,11 @@ public class Welcome extends Fragment implements View.OnClickListener , Progress
     @Override
     public void onSaveInstanceState(Bundle outState) {
 
-        if (View.GONE == btnList.getVisibility()) {
-            outState.putBoolean("visible",false);
-        } else outState.putBoolean("visible",true);
+        if (btnList!=null) {
+            if (View.GONE == btnList.getVisibility()) {
+                outState.putBoolean("visible",false);
+            } else outState.putBoolean("visible",true);
+        }
 
         super.onSaveInstanceState(outState);
     }
